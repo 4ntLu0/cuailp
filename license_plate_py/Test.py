@@ -1,6 +1,7 @@
 import os
 import cv2
 import numpy as np
+import tensorflow as tf
 
 class colour:
     BLACK = '\033[97m'
@@ -34,7 +35,8 @@ def import_matrix():
         img_matrix.append(cv2.imread(currentPath))
 
 
-# Why is it returning none type for the last image?
+
+
 def show_all():
     for i in range(len(img_matrix) - 1):
         windowName = 'Window' + str(i)
@@ -49,6 +51,9 @@ def twoToOneDimension(arr):
     flat_arr = arr.ravel()
     # convert it to a matrix
     return flat_arr
+
+
+
 #Testing only below
 def test_colours():
     print(colour.BLACK + 'black?' + colour.END)
