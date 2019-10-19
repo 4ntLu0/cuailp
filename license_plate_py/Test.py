@@ -2,7 +2,6 @@ import os
 import cv2
 import numpy as np
 
-
 class colour:
     BLACK = '\033[97m'
     GREY = '\033[37m'
@@ -22,12 +21,12 @@ class colour:
 
 
 
-mainPath = 'F:/Cuyow/cuailp/license_plate_py/test_img/'
+mainPath = 'C:/Users/User/Documents/GitHub/cuailp/license_plate_py/test_img/'
 img_matrix = []
 
 
 def import_matrix():
-    for filename in os.listdir("F:/Cuyow/cuailp/license_plate_py/test_img"):
+    for filename in os.listdir(mainPath):
         currentPath = mainPath + filename
         print('Working with: ', colour.BOLD + colour.BLUE + filename + colour.END, 'which has path: ',
               colour.BOLD + colour.BLUE + currentPath + colour.END)
@@ -44,6 +43,12 @@ def show_all():
         cv2.waitKey(0)
 
 
+#Input: arr - a two dimensional array
+#Returns:vector - a one dimensional contiguous (as given by ravel()function) array
+def twoToOneDimension(arr):
+    flat_arr = arr.ravel()
+    # convert it to a matrix
+    return flat_arr
 #Testing only below
 def test_colours():
     print(colour.BLACK + 'black?' + colour.END)
@@ -52,8 +57,12 @@ if __name__ == '__main__':
     import_matrix()
     numpy_matrix = np.array(img_matrix)
     print('printing numpy matrix', numpy_matrix)
+    numpy_vector = twoToOneDimension(numpy_matrix)
+    print('vectorized', numpy_vector)
+    print('vector size', (numpy_vector.shape))
+   # print()
 
-    test_colours()
+   # test_colours()
     '''
     print(len(img_matrix))
     print(len(img_matrix[0]))
