@@ -49,6 +49,19 @@ def twoToOneDimension(arr):
     flat_arr = arr.ravel()
     # convert it to a matrix
     return flat_arr
+def principal_component_analysis(arr):
+    vector = twoToOneDimension(arr)
+    mean_vector = vector
+    for a in range(11):
+        mean_vector[a] = np.mean(vector[a])
+    diff_vector = vector
+
+    for a in range(11):
+        for b in range(vector[a].size):
+            diff_vector[b] = vector[b] - mean_vector[a]
+    cov_matrix = np.cov(vector)
+    return mean_vector
+    
 #Testing only below
 def test_colours():
     print(colour.BLACK + 'black?' + colour.END)
@@ -57,9 +70,10 @@ if __name__ == '__main__':
     import_matrix()
     numpy_matrix = np.array(img_matrix)
     print('printing numpy matrix', numpy_matrix)
-    numpy_vector = twoToOneDimension(numpy_matrix)
-    print('vectorized', numpy_vector)
-    print('vector size', (numpy_vector.shape))
+   # numpy_vector = twoToOneDimension(numpy_matrix)
+   # print('vectorized', numpy_vector)
+   # print('vector size', (numpy_vector.shape))
+    print('diff vector', principal_component_analysis(numpy_matrix))
    # print()
 
    # test_colours()
