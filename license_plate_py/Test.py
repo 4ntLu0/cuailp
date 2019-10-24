@@ -1,7 +1,7 @@
 import os
 import cv2
 import numpy as np
-import tensorflow as tf
+#import tensorflow as tf
 
 class colour:
     BLACK = '\033[97m'
@@ -45,25 +45,26 @@ def show_all():
         cv2.waitKey(0)
 
 
-#Input: arr - a two dimensional array
-#Returns:vector - a one dimensional contiguous (as given by ravel()function) array
 def twoToOneDimension(arr):
-    flat_arr = arr.ravel()
-    # convert it to a matrix
-    return flat_arr
-<<<<<<< HEAD
+    flatter_arr = []
+    for a in range(11):
+        flatter_arr.append(arr.ravel())
+    return flatter_arr
 def principal_component_analysis(arr):
-    vector = twoToOneDimension(arr)
-    mean_vector = vector
-    for a in range(11):
-        mean_vector[a] = np.mean(vector[a])
-    diff_vector = vector
+    vector = []
+    mean = []
+    for a in range (0, arr.size - 1):
+        vector.append(twoToOneDimension(arr[a]))
+        mean.append(int(np.mean(vector[a])))
+    print('mean', mean)
+    diff = []
+    for a in range(0, vector.size - 1):
+        diff.append(vector[a] - np.mean(mean))
 
-    for a in range(11):
-        for b in range(vector[a].size):
-            diff_vector[b] = vector[b] - mean_vector[a]
-    cov_matrix = np.cov(vector)
-    return mean_vector
+    # for a in range(1, 11):
+    #     diff_vector[a] = vector[a] - mean
+    # cov_matrix = np.cov(vector)
+    # return diff_vector
     
 def test_colours():
     print(colour.BLACK + 'black?' + colour.END)
@@ -75,7 +76,7 @@ if __name__ == '__main__':
    # numpy_vector = twoToOneDimension(numpy_matrix)
    # print('vectorized', numpy_vector)
    # print('vector size', (numpy_vector.shape))
-    print('diff vector', principal_component_analysis(numpy_matrix))
+    print('raveled', principal_component_analysis(numpy_matrix))
    # print()
 
    # test_colours()
