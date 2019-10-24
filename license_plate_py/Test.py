@@ -58,21 +58,21 @@ def show_all(thisMatrix):
 
 
 def twoToOneDimension(arr):
-    flatter_arr = []
+    flatter_arr = np.empty(11)
     for a in range(11):
-        flatter_arr.append(arr.ravel())
+        np.append(flatter_arr, arr.ravel())
     return flatter_arr
 def principal_component_analysis(arr):
-    vector = []
-    mean = []
+    vector = np.empty(int(arr.size))
+    mean = np.empty(int(arr.size))
     for a in range (0, arr.size - 1):
-        vector.append(twoToOneDimension(arr[a]))
-        mean.append(int(np.mean(vector[a])))
+        np.append(vector,twoToOneDimension(arr[a]))
+        np.append(mean, int(np.mean(vector[a])))
     print('mean', mean)
-    diff = []
+    diff = np.empty(int(vector.size))
     
     for a in range(0, vector.size - 1):
-        diff.append(vector[a] - np.mean())
+        np.append(diff, vector[a] - np.mean(mean))
     return diff
     
 def test_colours():
@@ -82,7 +82,6 @@ if __name__ == '__main__':
     import_matrix()
     numpy_matrix = np.array(imgMatrix)
     print('printing numpy matrix', numpy_matrix)
-<<<<<<< HEAD
 
    # numpy_vector = twoToOneDimension(numpy_matrix)
    # print('vectorized', numpy_vector)
@@ -90,9 +89,7 @@ if __name__ == '__main__':
     print('raveled', principal_component_analysis(numpy_matrix))
    # print()
 
-    show_all(numpy_matrix)
-=======
->>>>>>> db4012bb109bdfbaca6cdd92d604089ddf34c82e
+    # show_all(numpy_matrix)
     # numpy_vector = twoToOneDimension(numpy_matrix)
     # print('vectorized', numpy_vector)
     # print('vector size', (numpy_vector.shape))
