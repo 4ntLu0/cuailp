@@ -59,16 +59,6 @@ def show_all(thisMatrix):
 
 def twoToOneDimension(arr):
     flatter_arr = []
-# Input: arr - a two dimensional array
-# Returns:vector - a one dimensional contiguous (as given by ravel()function) array
-def twoToOneDimension(arr):
-    flat_arr = arr.ravel()
-    # convert it to a matrix
-    return flat_arr
-
-
-# <<<<<<< HEAD
-def principal_component_analysis(arr):
     for a in range(11):
         flatter_arr.append(arr.ravel())
     return flatter_arr
@@ -80,13 +70,10 @@ def principal_component_analysis(arr):
         mean.append(int(np.mean(vector[a])))
     print('mean', mean)
     diff = []
+    
     for a in range(0, vector.size - 1):
-        diff.append(vector[a] - np.mean(mean))
-
-    # for a in range(1, 11):
-    #     diff_vector[a] = vector[a] - mean
-    # cov_matrix = np.cov(vector)
-    # return diff_vector
+        diff.append(vector[a] - np.mean())
+    return diff
     
 def test_colours():
     print(colour.BLACK + 'black?' + colour.END)
