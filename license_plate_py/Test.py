@@ -36,6 +36,7 @@ elif whois == 'A':
 
 def import_matrix():
     for filename in os.listdir(mainPath):
+        print(filename, '\n')
         if filename.endswith('.jpg') or filename.endswith('.png') or filename.endswith('.jpeg'):
             currentPath = mainPath + filename
             print('Working with: ', colour.BOLD + colour.BLUE + filename + colour.END, 'which has path: ',
@@ -46,7 +47,7 @@ def import_matrix():
 
 def show_all(thisMatrix):
     count = 0
-    for i in range(len(thisMatrix) - 1):
+    for i in range(len(thisMatrix)):
         windowName = 'Window' + str(i)
         cv2.namedWindow(windowName, i)
         cv2.imshow(windowName, thisMatrix[i])
@@ -94,6 +95,7 @@ if __name__ == '__main__':
     import_matrix()
     numpy_matrix = np.array(imgMatrix)
     print('printing numpy matrix', numpy_matrix)
+<<<<<<< HEAD
 
    # numpy_vector = twoToOneDimension(numpy_matrix)
    # print('vectorized', numpy_vector)
@@ -102,6 +104,8 @@ if __name__ == '__main__':
    # print()
 
     show_all(numpy_matrix)
+=======
+>>>>>>> db4012bb109bdfbaca6cdd92d604089ddf34c82e
     # numpy_vector = twoToOneDimension(numpy_matrix)
     # print('vectorized', numpy_vector)
     # print('vector size', (numpy_vector.shape))
