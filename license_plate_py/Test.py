@@ -1,7 +1,8 @@
 import os
 import cv2
 import numpy as np
-#import tensorflow as tf
+from test2 import printer #very interesting that this works
+import tensorflow as tf
 
 
 class colour:
@@ -23,7 +24,8 @@ class colour:
 
 
 dirPathListings = ['C:/Users/User/Documents/GitHub/cuailp/license_plate_py/test_img/',
-                   'N:/cuailp/license_plate_py/test_img/']
+                   'N:/cuailp/license_plate_py/test_img/',
+                   'D:/cuailp/license_plate_py/test_img/']
 mainPath = ''
 imgMatrix = []
 
@@ -31,7 +33,11 @@ whois = str.upper(input('are you Sree (S) or Anthony (A)?'))
 if whois == 'S':
     mainPath = dirPathListings[0]
 elif whois == 'A':
-    mainPath = dirPathListings[1]
+    whois = str.upper(input('laptop (L) or desktop (D)'))
+    if whois == 'L':
+        mainPath = dirPathListings[2]
+    elif whois == 'D':
+        mainPath = dirPathListings[1]
 
 
 def import_matrix():
@@ -93,10 +99,10 @@ if __name__ == '__main__':
    # print()
 
     # show_all(numpy_matrix)
-    # numpy_vector = twoToOneDimension(numpy_matrix)
-    # print('vectorized', numpy_vector)
-    # print('vector size', (numpy_vector.shape))
-    #print('diff vector', principal_component_analysis(numpy_matrix))
+    numpy_vector = twoToOneDimension(numpy_matrix)
+    print('vectorized', numpy_vector)
+    print('vector size', (numpy_vector.shape))
+    print('diff vector', principal_component_analysis(numpy_matrix))
     # print()
     # test_colours()
     '''
@@ -109,3 +115,5 @@ if __name__ == '__main__':
     print(len(img_matrix[2][0]))
     '''
     # show_all()
+
+    #printer()
