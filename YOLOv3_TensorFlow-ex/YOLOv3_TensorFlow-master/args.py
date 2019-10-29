@@ -3,11 +3,11 @@
 
 from __future__ import division, print_function
 
-from utils.misc_utils import parse_anchors, read_class_names
+from misc_utils import parse_anchors, read_class_names
 import math
 
 ### Some paths
-train_file = './data/my_data/train.txt'  # The path of the training txt file.
+train_file = './data/my_data/train.txt'  # The path of the training txt file.;
 val_file = './data/my_data/val.txt'  # The path of the validation txt file.
 restore_path = './data/darknet_weights/yolov3.ckpt'  # The path of the weights to restore.
 save_dir = './checkpoint/'  # The directory of the weights to save.
@@ -61,7 +61,7 @@ update_part = ['yolov3/yolov3_head']
 
 ### other training strategies
 multi_scale_train = True  # Whether to apply multi-scale training strategy. Image size varies from [320, 320] to [640, 640] by default.
-use_label_smooth = True # Whether to use class label smoothing strategy.
+use_label_smooth = True  # Whether to use class label smoothing strategy.
 use_focal_loss = True  # Whether to apply focal loss on the conf loss.
 use_mix_up = True  # Whether to use mix up data augmentation strategy. 
 use_warm_up = True  # whether to use warm up strategy to prevent from gradient exploding.

@@ -25,7 +25,7 @@ class colour:
 
 dirPathListings = ['C:/Users/User/Documents/GitHub/cuailp/license_plate_py/test_img/',
                    'N:/cuailp/license_plate_py/test_img/',
-                   'D:/cuailp/license_plate_py/test_img']
+                   'D:/cuailp/license_plate_py/test_img/']
 mainPath = ''
 imgMatrix = []
 
@@ -96,10 +96,10 @@ if __name__ == '__main__':
    # print()
 
     # show_all(numpy_matrix)
-    # numpy_vector = twoToOneDimension(numpy_matrix)
-    # print('vectorized', numpy_vector)
-    # print('vector size', (numpy_vector.shape))
-    #print('diff vector', principal_component_analysis(numpy_matrix))
+    numpy_vector = twoToOneDimension(numpy_matrix)
+    print('vectorized', numpy_vector)
+    print('vector size', (numpy_vector.shape))
+    print('diff vector', principal_component_analysis(numpy_matrix))
     # print()
     # test_colours()
     '''
@@ -113,4 +113,4 @@ if __name__ == '__main__':
     '''
     # show_all()
 
-printer()
+    #printer()
