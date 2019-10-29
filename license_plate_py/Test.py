@@ -74,6 +74,9 @@ def principal_component_analysis(arr):
     for a in range(0, vector.size - 1):
         np.append(diff, vector[a] - np.mean(mean))
     return diff
+
+    #Covariance matrix
+    
     
 def test_colours():
     print(colour.BLACK + 'black?' + colour.END)
