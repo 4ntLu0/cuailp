@@ -2,7 +2,7 @@
 # this file contains the parameters used in train.py
 
 import math
-from misc_utils import parse_anchors, read_class_names
+from utils.misc_utils import parseAnchors, readClassNames #double check import
 
 # some random paths
 dirPathListings = ['C:/Users/User/Documents/GitHub/cuailp/license_plate_py/Yolov3_TF2/',
@@ -80,8 +80,8 @@ use_voc_07_metric = False  # whether to use voc 2007 eval metric (11-point metri
 
 # parse some params
 ' uhhhh idk how to do that. '
-anchors = parse_anchors(anchor_path)
-classes = read_class_names(class_name_path)
+anchors = parseAnchors(anchor_path)
+classes = readClassNames(class_name_path)
 class_num = len(classes)
 train_img_cnt = len(open(train_file, 'r').readlines())
 val_img_cnt = len(open(val_file, 'r').readlines())

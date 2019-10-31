@@ -16,13 +16,13 @@ def conv2d(inputs, filters, kernel_size, strides=1):
 
     if strides > 1:
         inputs = _fixed_padding(inputs, kernel_size)
-    inputs = tf.contrib.slim.conv2d(inputs, filters, kernel_size, stride=strides,
+    inputs = slim.conv2d(inputs, filters, kernel_size, stride=strides,
                                     padding=('SAME' if strides == 1 else 'VALID'))
     # i'm not sure about tf.contrib.slim.conv2d
     return inputs
 
 
-def darknet53_body(inputs):
+def darknet53Body(inputs):
     def res_block(inputs, filters):
         shortcut = inputs
         net = conv2d(inputs, filters * 1, 1)
@@ -69,7 +69,7 @@ def darknet53_body(inputs):
     return route_1, route_2, route_3
 
 
-def yolo_block(inputs, filters):
+def yoloBlock(inputs, filters):
     net = conv2d(inputs, filters * 1, 1)
     net = conv2d(net, filters * 2, 3)
     net = conv2d(net, filters * 1, 1)
@@ -80,7 +80,7 @@ def yolo_block(inputs, filters):
     return route, net
 
 
-def upsample_layer(inputs, out_shape):
+def upsampleLayer(inputs, out_shape):
     new_height, new_width = out_shape[1], out_shape[2]
     # HEIGHT IS THE FIRST
     # TODO: set 'align_corners' as True?
