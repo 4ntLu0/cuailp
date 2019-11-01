@@ -2,11 +2,12 @@
 # this file contains the parameters used in train.py
 
 import math
+from utils.misc_utils import parseAnchors, readClassNames #double check import
 
 # some random paths
-dirPathListings = ['C:/Users/User/Documents/GitHub/cuailp/license_plate_py/test_img/',
-                   'N:/cuailp/license_plate_py/test_img/',
-                   'D:/cuailp/license_plate_py/test_img/']
+dirPathListings = ['C:/Users/User/Documents/GitHub/cuailp/license_plate_py/Yolov3_TF2/',
+                   'N:/cuailp/license_plate_py/Yolov3_TF2/',
+                   'D:/cuailp/license_plate_py/Yolov3_TF2/']
 main_path = dirPathListings[1]  # sets the main path that you will be using
 train_file = main_path + 'data/my_data-train.txt'  # path of the training txt file
 val_file = main_path + 'data/my_data/val.txt'  # path of the validation txt file
@@ -74,13 +75,13 @@ warm_up_epoch = 3  # warm up training epoches. Set to a larger value if gradient
 nms_threshold = 0.45  # iou threshold in nms operation
 score_threshold = 0.01  # threshold of the probability of the classes in nms operation, i.e. score = pred_confs * prod_probs. set lower for higher recall
 # mAP eval
-eval_thershold = 0.5  # the iou threshold applied in mAP evaluation.
+eval_threshold = 0.5  # the iou threshold applied in mAP evaluation.
 use_voc_07_metric = False  # whether to use voc 2007 eval metric (11-point metric)
 
 # parse some params
 ' uhhhh idk how to do that. '
-# anchors = some parsey bois
-# classes = some read classy bois
+anchors = parseAnchors(anchor_path)
+classes = readClassNames(class_name_path)
 class_num = len(classes)
 train_img_cnt = len(open(train_file, 'r').readlines())
 val_img_cnt = len(open(val_file, 'r').readlines())
