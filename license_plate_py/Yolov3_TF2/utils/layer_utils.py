@@ -2,7 +2,7 @@
 
 import numpy as np
 import tensorflow as tf
-import tf_slim as slim  # from google-research memes
+#import tf_slim as slim  # from google-research memes
 
 
 def conv2d(inputs, filters, kernel_size, strides=1):
@@ -16,7 +16,7 @@ def conv2d(inputs, filters, kernel_size, strides=1):
 
     if strides > 1:
         inputs = _fixed_padding(inputs, kernel_size)
-    inputs = slim.conv2d(inputs, filters, kernel_size, stride=strides,
+    inputs = tf.conv2d(inputs, filters, kernel_size, stride=strides,
                                     padding=('SAME' if strides == 1 else 'VALID'))
     # i'm not sure about tf.contrib.slim.conv2d
     return inputs
@@ -42,7 +42,7 @@ def darknet53Body(inputs):
     net = conv2d(net, 128, 3, strides=2)
 
     # res_block * 2
-    for i in range(2)
+    for i in range(2):
         net = res_block(net, 64)
 
     net = conv2d(net, 256, 3, strides=2)
@@ -84,5 +84,5 @@ def upsampleLayer(inputs, out_shape):
     new_height, new_width = out_shape[1], out_shape[2]
     # HEIGHT IS THE FIRST
     # TODO: set 'align_corners' as True?
-    inputs = tf.image.resize_nearest_neighbor(inputs, (new_height, new width), name='upsampled')
+    inputs = tf.image.resize_nearest_neighbor(inputs, (new_height, new_width), name='upsampled')
     return inputs
