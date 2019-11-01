@@ -1,3 +1,4 @@
+# a quick comment up top to do some testing
 import tensorflow as tf
 #import tf_slim as slim
 
