@@ -2,10 +2,8 @@
 
 import numpy as np
 import tensorflow as tf
-import tf_slim as slim  # from google-research memes
+#import tf_slim as slim
 
-def conv2d(inputs , filters, kernel_size, strides=1):
-    
 '''
 conv2d 
 --- Inputs ---
@@ -47,26 +45,28 @@ conv2d
 --- Returns ---
  4D tensor with shape: (batch, filters, new_rows, new_cols) if data_format is "channels_first"
 '''
-    def _fixed_padding(inputs, kernel_size):
-    '''
-        --- Inputs ---
-        inputs - a tensor object (4D matrix with rank() =4)
-        kernel size - width and height of a filter mask layer
-                    - i.e. dimensions of squashing
-        --- Use ---
-        Is called when stride != 1, so adds padding to the input such that input does not drop values under VALID padding algorithm
+def conv2d(inputs , filters, kernel_size, strides=1):
 
-        --- Algorithm ---
-        - Sets total output size to kernel size - 1
+    def _fixed_padding(inputs, kernel_size):
+        '''
+            --- Inputs ---
+            inputs - a tensor object (4D matrix with rank() =4)
+            kernel size - width and height of a filter mask layer
+                    - i.e. dimensions of squashing
+            --- Use ---
+            Is called when stride != 1, so adds padding to the input such that input does not drop values under VALID padding algorithm
+
+            --- Algorithm ---
+            - Sets total output size to kernel size - 1
             So that each element of the kernel will always correspond to a valid element of the input when convolution occurs
-        - Set padding to be added to input as 
+            - Set padding to be added to input as
             - no padding for the 1th dimension
             - padding of half the kernel size before and after for the 2th dimension
             - padding of half the kernel size before and after for the 3th dimension
             - no padding for the last dimension
 
-        --- Returns ---
-        padded_inputs - a tensor object with size paddings[D, 0] + tensor.dim_size(D) + paddings[D, 1] for each dimension of the original input
+            --- Returns ---
+            padded_inputs - a tensor object with size paddings[D, 0] + tensor.dim_size(D) + paddings[D, 1] for each dimension of the original input
   
         '''
         pad_total = kernel_size - 1
@@ -106,7 +106,7 @@ def darknet53Body(inputs):
     net = conv2d(net, 128, 3, strides=2)
 
     # res_block * 2
-    for i in range(2)
+    for i in range(2):
         net = res_block(net, 64)
 
     net = conv2d(net, 256, 3, strides=2)
@@ -148,5 +148,5 @@ def upsampleLayer(inputs, out_shape):
     new_height, new_width = out_shape[1], out_shape[2]
     # HEIGHT IS THE FIRST
     # TODO: set 'align_corners' as True?
-    inputs = tf.image.resize_nearest_neighbor(inputs, (new_height, new width), name='upsampled')
+    inputs = tf.image.resize_nearest_neighbor(inputs, (new_height, new_width), name='upsampled')
     return inputs

@@ -1,5 +1,5 @@
 import tensorflow as tf
-import tf_slim as slim
+#import tf_slim as slim
 
 from utils.layer_utils import conv2d, darknet53Body, yoloBlock, upsampleLayer  # double check import
 
@@ -37,8 +37,8 @@ class yolov3(object):
                                 normalizer_fn=slim.batch_norm,
                                 normalizer_params=batch_norm_params,
                                 biases_initializer=None,
-                                "activation_fn= Lambda x: tf.nn.leaky_relu(x, alpha=0.1, name = None), "
-                                "weights_regularizer = slim.l2_regularizer(self.weight_decay)"):
+                                activation_fn= lambda x: tf.nn.leaky_relu(x, alpha=0.1, name = None),
+                                weights_regularizer = slim.l2_regularizer(self.weight_decay)):
                 with tf.variable_scope('darknet53Body'):
                     route_1, route_2, route_3 = darknet53Body(inputs)
                 with tf.variable_scope('yolov3Head'):
@@ -76,7 +76,9 @@ class yolov3(object):
         ratio = tf.cast(self.img_size / grid_size, tf.float32)
         # rescale anchors to feature map
         # ANCHOR IS IN W,H format
-        rescaled_anchors = [(anchor[0] / ratio[1], anchor[1] / ratio[0] for anchor in anchors)]
+        rescaled_anchors = []
+        for anchor in anchors:
+            rescaled_anchors.append((anchor[0] / ratio[1], anchor[1] / ratio[0]))
 
         feature_map = tf.reshape(feature_map, [-1, grid_size[0], grid_size[1], 3, 5 + self.class_num])
 
@@ -97,8 +99,7 @@ class yolov3(object):
         y_offset = tf.reshape(grid_y, (-1, 1))
         x_y_offset = tf.concat([x_offset, y_offset], axis=-1)
         # shape: [13, 13, 1, 2]
-        x_y_offset = tf.cast(tf.reshape(x_y_offset, [grid_size[0], grid_size[1], 1, 2])
-        tf.float32)
+        x_y_offset = tf.cast(tf.reshape(x_y_offset, [grid_size[0], grid_size[1], 1, 2]), tf.float32)
 
         # get absolute box coordinates on the feature_map
         box_centers = box_centers + x_y_offset
