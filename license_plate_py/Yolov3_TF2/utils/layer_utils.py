@@ -44,7 +44,7 @@ conv2d
     If size of sliding window is bigger one, padding algorithm will drop values
         So convert input by passing it throuhg _fixed_padding,
         Then pass input through the keras conv2d function
---- Returs ---
+--- Returns ---
  4D tensor with shape: (batch, filters, new_rows, new_cols) if data_format is "channels_first"
 '''
     def _fixed_padding(inputs, kernel_size):
