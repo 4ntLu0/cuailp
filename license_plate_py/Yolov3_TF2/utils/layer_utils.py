@@ -8,7 +8,7 @@ import tensorflow as tf
 conv2d 
 --- Inputs ---
     inputs - a tensor object (4D matrix with rank() =4), can take types of
-    filters - a tensor object of same type as inputs
+    filters - integer representing dimensionality of output space (i.e. the number of output filters in the convolution/ number of neurons in layer)
     kernel size - width and height of a filter mask layer
                 - i.e. dimensions of squashing
     stride - int or list of ints (of length, 1 2 or 4);  the size of the sliding window for each dimension of the input
@@ -83,8 +83,18 @@ def conv2d(inputs , filters, kernel_size, strides=1):
 
 def darknet53Body(inputs):
     '''
-    --- Inputs ---
-    
+        --- Inputs ---
+        inputs - a tensor object (4D matrix with rank 4)
+        
+        --- Use ---
+        Runs data through convolutional network over and overagain (in order to mimick Darknet53's neural network (latest version))
+
+        --- Algorithm ---
+        Logic: First get main features. For each main feature, extract more features
+        That is,
+        Begin with 'small' filter size (2^5), 3x3 kernel size
+        
+
 
     '''
     def res_block(inputs, filters):
