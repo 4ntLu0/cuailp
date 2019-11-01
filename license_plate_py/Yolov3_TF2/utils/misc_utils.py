@@ -35,3 +35,21 @@ def readClassNames(class_name_path):
         for ID, name in enumerate(data):
             names[ID] = name.strip ('\n')
     return names
+
+def load_weights(var_list, weights_file):
+    '''
+    loads and cornverts pre trained weights
+    :param var_list: list of network variables
+    :param weights_file: name of the binary file
+    :return:
+    '''
+    with open(weights_file, 'rb') as fp:
+        np.fromfile(fp, dtype=np.float32)
+
+    ptr = 0
+    i = 0
+    assign_ops = []
+    while i < len(var_list) - 1:
+        var1 = var_list[i]
+        var2 = var_list[i + 1]
+        if 'Conv' in var1.name.split('/')[-2]
