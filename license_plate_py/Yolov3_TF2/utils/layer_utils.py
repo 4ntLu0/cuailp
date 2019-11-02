@@ -7,7 +7,7 @@ import tensorflow as tf
 '''
 conv2d 
 --- Inputs ---
-    inputs - a tensor object (4D matrix with rank() =4), can take types of
+    inputs - a tensor object (4D matrix with rank 4)
     filters - integer representing dimensionality of output space (i.e. the number of output filters in the convolution/ number of neurons in layer)
     kernel size - width and height of a filter mask layer
                 - i.e. dimensions of squashing
@@ -51,7 +51,7 @@ def conv2d(inputs , filters, kernel_size, strides=1):
         '''
             --- Inputs ---
             inputs - a tensor object (4D matrix with rank() =4)
-            kernel size - width and height of a filter mask layer
+            kernel size - integer representing rank of a filter mask layer
                     - i.e. dimensions of squashing
             --- Use ---
             Is called when stride != 1, so adds padding to the input such that input does not drop values under VALID padding algorithm
@@ -87,17 +87,46 @@ def darknet53Body(inputs):
         inputs - a tensor object (4D matrix with rank 4)
         
         --- Use ---
-        Runs data through convolutional network over and overagain (in order to mimick Darknet53's neural network (latest version))
+        Runs data through convolutional network over and over again (in order to mimick Darknet53's neural network (latest version))
 
         --- Algorithm ---
-        Logic: First get main features. For each main feature, extract more features
-        That is,
-        Begin with 'small' filter size (2^5), 3x3 kernel size
+        CNN Logic:
+            Input data is sent to each neuron (filter) on the first layer, where the dot product of each pixel in the input data and matrix (kernel)
+            is performed to produce a new pixel. 
+            The image produced by all neurons/filters in a layer are backpropogated and combined and passed as the input for the next layer of neurons
+            
+            Using this, we first detect features that can be recognized and interpreted relatively easy (largest features), by passing it through a
+            layer with a low neuron density. 
+            Then detect increasingly more abstract (and smaller) features, usually present in many previously detected larger features, by passing
+            it through layers with increasingly high neuron densities. 
+            Finally make a specific classification by combining all the specific features detected by the previous layers in the input data by using 
+            a very high density neuron layer. 
+
+            We decrease dimensionality of the resulting feature map each time the data is passed through a layer (from strides = 2), allowing for 
+            some compression
+
+
+        --- Returns ---
         
-
-
     '''
     def res_block(inputs, filters):
+        '''
+        --- Inputs ---
+        inputs -  a tensor object (4D matrix with rank 4)
+        filters - integer representing dimensionality of output space (i.e. the number of output filters in the convolution/ number of neurons in layer)
+        
+        --- Use ---
+        Backpropogate and combine the images produced by filters in two layers
+
+        --- Algorithm ---
+        - Pass input through first filter layer with kernel size of 1 so that the output has the same number of pixels as input
+        - Pass resultant through next filter layer (multiplication by 2 yeilds next power of 2) with kernel size of 3 in order to reduce number of 
+        pixels in output
+        - Combine original input with filtered matrix
+        
+        --- Returns ---
+        net - 4D tensor object
+        '''
         shortcut = inputs
         net = conv2d(inputs, filters * 1, 1)
         net = conv2d(net, filters * 2, 3)
