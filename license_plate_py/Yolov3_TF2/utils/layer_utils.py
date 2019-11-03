@@ -107,7 +107,8 @@ def darknet53Body(inputs):
 
 
         --- Returns ---
-        
+        route_1, route_2 and route_3 - Feature maps of 3 different sizes, each detecting features at a different scale
+            route_1 has the largest scale, which is downsized through route_2 and route_3
     '''
     def res_block(inputs, filters):
         '''
