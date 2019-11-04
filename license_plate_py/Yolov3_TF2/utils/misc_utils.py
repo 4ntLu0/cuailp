@@ -13,11 +13,22 @@ def parseAnchors(anchor_path):
     anchors = np.reshape(np.asarray(open(anchor_path, 'r').read().split(','), np.float32), [-1,2])
     return anchors
 
-def readClassNames(class_name_path): #sree I actually don't know how this works
+def readClassNames(class_name_path): 
     '''
-    reads in all the class names as a dictionary.
-    :param class_name_path:
-    :return:
+    --- Inputs ---
+    class_name_path - string representing the path of the class file
+
+    -- Use --
+    Read in all the class name files that are needed
+
+    --- Algorithm ---
+    Open file class_name_path
+    Read in each value as a data object, not a string
+    Key each id to its corresponding class name in the dictionary:
+        i.e. names = {"id" : "name", "1", "class_name"}
+
+    --- Returns ---
+    names - dictionary containing a series of class names
     '''
     names = {}
     with open(class_name_path, 'r') as data:

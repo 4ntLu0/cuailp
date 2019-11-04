@@ -89,12 +89,12 @@ def darknet53Body(inputs):
         --- Use ---
         Runs data through convolutional network over and over again (in order to mimick Darknet53's neural network (latest version))
 
-        --- Algorithm ---
-        CNN Logic:
+        --- Logic ---
+        CNN:
             Input data is sent to each neuron (filter) on the first layer, where the dot product of each pixel in the input data and matrix (kernel)
             is performed to produce a new pixel. 
             The image produced by all neurons/filters in a layer are backpropogated and combined and passed as the input for the next layer of neurons
-            
+        
             Using this, we first detect features that can be recognized and interpreted relatively easy (largest features), by passing it through a
             layer with a low neuron density. 
             Then detect increasingly more abstract (and smaller) features, usually present in many previously detected larger features, by passing
@@ -104,7 +104,9 @@ def darknet53Body(inputs):
 
             We decrease dimensionality of the resulting feature map each time the data is passed through a layer (from strides = 2), allowing for 
             some compression
-
+        
+        --- Algorithm ---
+        
 
         --- Returns ---
         route_1, route_2 and route_3 - Feature maps of 3 different sizes, each detecting features at a different scale
