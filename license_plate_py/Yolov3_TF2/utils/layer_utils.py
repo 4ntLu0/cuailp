@@ -4,49 +4,49 @@ import numpy as np
 import tensorflow as tf
 #import tf_slim as slim
 
-'''
-conv2d 
---- Inputs ---
-    inputs - a tensor object (4D matrix with rank 4)
-    filters - integer representing dimensionality of output space (i.e. the number of output filters in the convolution/ number of neurons in layer)
-    kernel size - width and height of a filter mask layer
-                - i.e. dimensions of squashing
-    stride - int or list of ints (of length, 1 2 or 4);  the size of the sliding window for each dimension of the input
-                - if the length is 1 or 2, the batch dimension and channels dimension are set to 1
-    padding - string; either "SAME" or "VALID" - referring to padding algorithms:
-                "SAME" algorithm: (assumes that stride = 1)
-                    Size of output is equal to size of input
-                    If a kernel (filter) of size k×k is used, then we choose padding p such that p = (k+1)/2
-                        Proof:
-                            Consider a nxn input N and a mxm kernel K
-                            In order to make the output a nxn matrix, we need to compute the convolutional matrix of the input n times in each direction
-                            It follows that the center of the kernel should be placed at each cell of the input matrix
-                            We must therefore pad each cell of the input with enough zeroes to make it the center of the kernel
-                                The center of the mxm kernel lies at [K]((m+1)/2, (m+1)/2) (assuming m is odd)
-                            If we want the center of K to lie on (a,a) for some a <= m, 
-                                some horizontal translation must be done to the center of K ((a+1)/2, (a+1)/2)
-                            We want to choose p where p + (a+1)/2 = a 
-                                                      p = a - (a+1)/2
-                                                      p = (a - 1)/2. QED.
+def conv2d(inputs , filters, kernel_size, strides=1):
+
+    '''
+    conv2d 
+    --- Inputs ---
+        inputs - a tensor object (4D matrix with rank 4)
+        filters - integer representing dimensionality of output space (i.e. the number of output filters in the convolution/ number of neurons in layer)
+        kernel size - width and height of a filter mask layer
+            - i.e. dimensions of squashing
+        stride - int or list of ints (of length, 1 2 or 4);  the size of the sliding window for each dimension of the input
+            - if the length is 1 or 2, the batch dimension and channels dimension are set to 1
+        padding - string; either "SAME" or "VALID" - referring to padding algorithms:
+            "SAME" algorithm: (assumes that stride = 1)
+            Size of output is equal to size of input
+            If a kernel (filter) of size k×k is used, then we choose padding p such that p = (k+1)/2
+            Proof:
+                Consider a nxn input N and a mxm kernel K
+                In order to make the output a nxn matrix, we need to compute the convolutional matrix of the input n times in each direction
+                It follows that the center of the kernel should be placed at each cell of the input matrix
+                We must therefore pad each cell of the input with enough zeroes to make it the center of the kernel
+                The center of the mxm kernel lies at [K]((m+1)/2, (m+1)/2) (assuming m is odd)
+                If we want the center of K to lie on (a,a) for some a <= m, 
+                some horizontal translation must be done to the center of K ((a+1)/2, (a+1)/2)
+                We want to choose p where p + (a+1)/2 = a 
+                      p = a - (a+1)/2
+                      p = (a - 1)/2. QED.
                 "VALID" algorithm: 
                     Only uses 'valid' input data; that is, no null value (0) padding is added to the data
                     Valid is used when stride is not equal to one, so rightmost-bottommost values that do not fit into filter window
                     So, output will have dimensions of size filterwindow - 1 
-                        (so that each element of the filterwindow contains valid input (never inexistent input))
---- Uses ---
-    Puts data through a 2 dimensional convoluntional neural network
+                    (so that each element of the filterwindow contains valid input (never inexistent input))
+    --- Uses ---
+        Puts data through a 2 dimensional convoluntional neural network
 
---- Algorithm ---
-    If size of window is 1, then padding algorithm will not drop values,
+    --- Algorithm ---
+        If size of window is 1, then padding algorithm will not drop values,
         So, pass input data through the keras conv2d function
-    If size of sliding window is bigger one, padding algorithm will drop values
+        If size of sliding window is bigger one, padding algorithm will drop values
         So convert input by passing it throuhg _fixed_padding,
         Then pass input through the keras conv2d function
---- Returns ---
- 4D tensor with shape: (batch, filters, new_rows, new_cols) if data_format is "channels_first"
-'''
-def conv2d(inputs , filters, kernel_size, strides=1):
-
+    --- Returns ---
+        4D tensor with shape: (batch, filters, new_rows, new_cols) if data_format is "channels_first"
+    '''
     def _fixed_padding(inputs, kernel_size):
         '''
             --- Inputs ---
@@ -185,6 +185,12 @@ def yoloBlock(inputs, filters):
 
 
 def upsampleLayer(inputs, out_shape):
+    '''
+    --- Inputs ---
+    inputs -  a tensor object (4D matrix with rank 4)
+    out_shape - 
+    '''
+
     new_height, new_width = out_shape[1], out_shape[2]
     # HEIGHT IS THE FIRST
     # TODO: set 'align_corners' as True?
