@@ -1,6 +1,7 @@
 # a quick comment up top to do some testing
 import tensorflow as tf
 #import tf_slim as slim
+#TODO: RE-WRITE WITHOUT TF.SLIM
 
 from utils.layer_utils import conv2d, darknet53Body, yoloBlock, upsampleLayer  # double check import
 

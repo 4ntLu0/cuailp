@@ -32,7 +32,7 @@ def conv2d(inputs , filters, kernel_size, strides=1):
                       p = (a - 1)/2. QED.
                 "VALID" algorithm: 
                     Only uses 'valid' input data; that is, no null value (0) padding is added to the data
-                    Valid is used when stride is not equal to one, so rightmost-bottommost values that do not fit into filter window
+                    Valid is used when stride is not equal to one, so rightmost-bottommost values that do not fit into filter window //SREE WHAT IS YOUR ENGLISH PLS
                     So, output will have dimensions of size filterwindow - 1 
                     (so that each element of the filterwindow contains valid input (never inexistent input))
     --- Uses ---
@@ -43,7 +43,7 @@ def conv2d(inputs , filters, kernel_size, strides=1):
         So, pass input data through the keras conv2d function
         If size of sliding window is bigger one, padding algorithm will drop values
         So convert input by passing it throuhg _fixed_padding,
-        Then pass input through the keras conv2d function
+        Then pass input through the ?keras conv2d function //KERAS?
     --- Returns ---
         4D tensor with shape: (batch, filters, new_rows, new_cols) if data_format is "channels_first"
     '''
