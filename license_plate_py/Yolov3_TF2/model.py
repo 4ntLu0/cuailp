@@ -11,9 +11,23 @@ class yolov3(object):
 
         '''
         --- Inputs ---
-        self - instance of yolov3 class
-        class_num - int, representing the number of classes to search for
-        anchors - 
+        self
+            instance of yolov3 class
+        class_num
+            int, representing the number of classes to search for
+        anchors
+            list - contains lists of size 2 representing height-width ratios
+            anchors are a predetermined set of boxes with particular height-width ratios; bounding boxes are offsets of these boxes
+        use_label_smooth
+            boolean - whether to use the label smoothing algorithm
+                That is, smooth the labels towards 1/num_classes: 
+                    new_label = label * (1 - label_smoothing) + label_smoothing / num_classes
+                This yeilds a lower loss when there is an incorrect prediction so incorrect learning/penalization occurs to a lesser degree
+        use_focal_loss
+            boolean - whether to use the focal loss algorithm
+                Adds a factor (1-p)^y to the standard criterion; when y > 0, this reduces relative loss for well classified examples
+                This puts the focus on harder/misclassified examples
+        batch_norm_decay
         '''
         # self.anchors = [[10,13],[16,30],[33,23],[30,61],[62,45],[59,119],[116,90],[156,198],[373,326]]
         self.class_num = class_num
