@@ -9,7 +9,7 @@ dirPathListings = ['C:/Users/User/Documents/GitHub/cuailp/license_plate_py/Yolov
                    'N:/cuailp/license_plate_py/Yolov3_TF2/',
                    'D:/cuailp/license_plate_py/Yolov3_TF2/']
 main_path = dirPathListings[2]  # sets the main path that you will be using
-train_file = main_path + 'data/my_data-train.txt'  # path of the training txt file
+train_file = main_path + 'data/my_data/train.txt'  # path of the training txt file
 val_file = main_path + 'data/my_data/val.txt'  # path of the validation txt file
 restore_path = main_path + 'data/darknet_weights/yolov3.ckpt'  # path of weights to restore
 save_dir = main_path + 'checkpoint/'  # directory of the weights to save
