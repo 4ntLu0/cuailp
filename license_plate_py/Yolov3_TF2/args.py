@@ -8,7 +8,7 @@ from utils.misc_utils import parseAnchors, readClassNames #double check import
 dirPathListings = ['C:/Users/User/Documents/GitHub/cuailp/license_plate_py/Yolov3_TF2/',
                    'N:/cuailp/license_plate_py/Yolov3_TF2/',
                    'D:/cuailp/license_plate_py/Yolov3_TF2/']
-main_path = dirPathListings[1]  # sets the main path that you will be using
+main_path = dirPathListings[2]  # sets the main path that you will be using
 train_file = main_path + 'data/my_data-train.txt'  # path of the training txt file
 val_file = main_path + 'data/my_data/val.txt'  # path of the validation txt file
 restore_path = main_path + 'data/darknet_weights/yolov3.ckpt'  # path of weights to restore
@@ -17,6 +17,8 @@ log_dir = main_path + 'data/logs/'  # directory to store tensorboard log files
 progress_log_path = main_path + 'data/progress.log'  # path to record the training progress
 anchor_path = main_path + 'data/yolo_anchors.txt'  # the path of the anchor txt file
 class_name_path = main_path + 'data/coco.names'  # path of the class names
+weights_path = main_path + 'data/darknet_weights/yolov3.weights'
+save_path = main_path + 'data/darknet_weights/yolov3.ckpt'
 
 # Training related numbers
 batch_size = 6
@@ -78,8 +80,6 @@ score_threshold = 0.01  # threshold of the probability of the classes in nms ope
 eval_threshold = 0.5  # the iou threshold applied in mAP evaluation.
 use_voc_07_metric = False  # whether to use voc 2007 eval metric (11-point metric)
 
-# parse some params
-' uhhhh idk how to do that. '
 anchors = parseAnchors(anchor_path)
 classes = readClassNames(class_name_path)
 class_num = len(classes)
