@@ -20,6 +20,8 @@ class_name_path = main_path + 'data/coco.names'  # path of the class names
 weights_path = main_path + 'data/darknet_weights/yolov3.weights'
 save_path = main_path + 'data/darknet_weights/yolov3.ckpt'
 
+
+
 # Training related numbers
 batch_size = 6
 img_size = [416, 416]  # images will be resized to [x,y] before feeding to network
@@ -89,3 +91,10 @@ train_batch_num = int(math.ceil(float(train_img_cnt) / batch_size))
 
 lr_decay_freq = int(train_batch_num * lr_decay_epoch)
 pw_boundaries = [float(i) * train_batch_num + global_step for i in pw_boundaries]
+
+def getWeights():
+    return weights_path
+def getSavePath():
+    return save_path
+def getAnchors():
+    return anchors
