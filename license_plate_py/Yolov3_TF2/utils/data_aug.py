@@ -168,7 +168,7 @@ def randomCropWithContraints( bbox, size, min_scale = 0.3, max_scale = 1, max_as
             crop_w = int(w * scale * np.sqrt(aspect_ratio))
 
             crop_t = random.randrange(h - crop_h)
-            crop_l = random.randrange(w-crop_w)
+            crop_l = random.randrange(w - crop_w)
             crop_bb = np.array((crop_l, crop_t, crop_l + crop_w, crop_t + crop_h))
 
             if len(bbox) == 0:
@@ -180,7 +180,7 @@ def randomCropWithContraints( bbox, size, min_scale = 0.3, max_scale = 1, max_as
             if min_iou <= iou.min() and iou.max() <= max_iou:
                 top, bottom = crop_t, crop_t + crop_h
                 left, right = crop_l, crop_l + crop_w
-                candidates.append((left, top, right-left, bottom-top))
+                candidates.append((left, top, right - left, bottom - top))
                 break
 
     # random select one
@@ -193,7 +193,8 @@ def randomCropWithContraints( bbox, size, min_scale = 0.3, max_scale = 1, max_as
         return new_bbox, new_crop
     return bbox, (0, 0, w, h)
 
-def randomColourDistort(img, brightness_delta = 32, hue_vari = 18, sat_vari = 0.5, val_vari = 0.5):
+
+def randomColourDistort( img, brightness_delta = 32, hue_vari = 18, sat_vari = 0.5, val_vari = 0.5 ):
     '''
     randomly distort image colour. Adjust brightness, hue, saturation, value.
     :param img: BGR uint8 format opencv image. HWC format.
@@ -210,33 +211,36 @@ def randomColourDistort(img, brightness_delta = 32, hue_vari = 18, sat_vari = 0.
     :rtype:
     '''
 
-    def randomHue(img_hsv, hue_vari, p = 0.5):
-        if np.random.uniform(0,1) > p:
+    def randomHue( img_hsv, hue_vari, p = 0.5 ):
+        if np.random.uniform(0, 1) > p:
             sat_mult = 1 + np.random.uniform(-sat_vari, sat_vari)
             img_hsv[:, :, 1] *= sat_mult
         return img_hsv
-    def randomSaturation(img_hsv, sat_vari, p = 0.5)
+
+    def randomSaturation( img_hsv, sat_vari, p = 0.5 )
         if np.random.uniform(0, 1) > p:
             sat_mult = 1 + np.random.uniform(-sat_vari, sat_vari)
             img_hsv[:, :, 2] *= sat_mult
         return img_hsv
-    def randomBrightness(img, brightness_delta, p= 0.6):
-        if np.random.uniform(0, 1)> p:
+
+    def randomBrightness( img, brightness_delta, p = 0.6 ):
+        if np.random.uniform(0, 1) > p:
             img = img.astype(np.float32)
             brightness_delta = int(np.random.uniform(-brightness_delta, brightness_delta))
             img = img + brightness_delta
         return np.clip(img, 0, 255)
-    def randomValue(img_hsv, val_vari, p = 0.5):
+
+    def randomValue( img_hsv, val_vari, p = 0.5 ):
         if np.random.uniform(0, 1) > p:
             val_mult = 1 + np.random.uniform(-val_vari, val_vari)
             img_hsv[:, :, 2] *= val_mult
         return img_hsv
 
-    #brightness
+    # brightness
     img = randomBrightness(img, brightness_delta)
     img = img.astype(np.uint8)
 
-    #color jitter
+    # color jitter
     img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV).astype(np.float32)
 
     if np.random.randint(0, 2):
@@ -253,7 +257,8 @@ def randomColourDistort(img, brightness_delta = 32, hue_vari = 18, sat_vari = 0.
 
     return img
 
-def letterboxResive(img, new_width, new_height, interp = 0):
+
+def letterboxResive( img, new_width, new_height, interp = 0 ):
     '''
     Letterbox resive. Keep the original aspect ratio in the resized image
     :param img:
@@ -284,7 +289,8 @@ def letterboxResive(img, new_width, new_height, interp = 0):
 
     return image_padded, resize_ratio, dw, dh
 
-def resizeWithBbox(img, bbox, new_width, new_height, interp = 0, letterbox = False):
+
+def resizeWithBbox( img, bbox, new_width, new_height, interp = 0, letterbox = False ):
     '''
     resize the image and correct the bbox accordingly
     :param img:
@@ -306,23 +312,25 @@ def resizeWithBbox(img, bbox, new_width, new_height, interp = 0, letterbox = Fal
         image_padde, resize_ratio, dw, dh = letterbox_resize(img, new_width, new_height, interp)
 
         # xmin, xmax
-        bbox[:, [0, 2]] = bbox[:, [0,2]] * resize_ratio + dw
+        bbox[:, [0, 2]] = bbox[:, [0, 2]] * resize_ratio + dw
         # ymin, ymax
-        bbox [:, [1,3]] = bbox[:, [1,3]] * resize_ratio + dh
+        bbox[:, [1, 3]] = bbox[:, [1, 3]] * resize_ratio + dh
 
         return image_padded, bbox
 
     else:
-        ori_height, ori width = img.shape[:2]
+        ori_height, ori
+        width = img.shape[:2]
 
         img = cv2.resize(img, (new_width, new_height), interpolation = interp)
 
-        bbox[:, [0,2]] = bbox[:, [0,2]] / ori_width * new_width
-        bbox[:, [1, 3]] = bbox[:, [1,3]] / ori_height * new_height
+        bbox[:, [0, 2]] = bbox[:, [0, 2]] / ori_width * new_width
+        bbox[:, [1, 3]] = bbox[:, [1, 3]] / ori_height * new_height
 
         return img, bbox
 
-def randomFlip(img, bbox, px = 0, py = 0):
+
+def randomFlip( img, bbox, px = 0, py = 0 ):
     '''
     Randomply flip the image and correct the bbox.
     :param img:
@@ -344,10 +352,47 @@ def randomFlip(img, bbox, px = 0, py = 0):
         bbox[:, 0] = xmin
         bbox[:, 2] = xmax
 
-    if np.random.uniform(0,1) < py:
+    if np.random.uniform(0, 1) < py:
         img = cv2.flip(img, 0)
         ymax = height - bbox[:, 1]
         bbox[:, 1] = ymin
         bbox[:, 3] = ymax
     return img, bbox
 
+
+def randomExpand( img, bbox, max_ratio = 4, fill = 0, keep_ratio = True ):
+    '''
+    random expand ori w/ borders. Identical to 'stretching'
+    :param img:
+    :type img:
+    :param bbox:
+    :type bbox:
+    :param max_ratio: maximum ratio of the output image on both directions
+    :type max_ratio:
+    :param fill: The value(s) for padded borders.
+    :type fill:
+    :param keep_ratio: if true, will keep output image as the same aspect ratio as input
+    :type keep_ratio: bool
+    :return:
+    :rtype:
+    '''
+
+    h, w, c = img.shape
+    ratio_x = random.uniform(1, max_ratio)
+    if keep_ratio:
+        ratio_y = ratio_x
+    else:
+        ratio_y = random.uniform(1, max_ratio)
+
+    oh, ow = int(h* ratio_y), int(w*ratio_x)
+    off_y = random.randint(0, oh-h)
+    off_x = random.randint(0, ow - w)
+
+    dst = np.full(shape = (oh, ow, c), fill_value = fill, dtype = img.dtype)
+
+    dst[off_y:off:y + h, off_x:off_x + w,:] = img
+
+    bbox[:, :2] += (off_x, off_y)
+    bbox[:, 2:4] += (off_x, off_y)
+
+    return dst, bbox
