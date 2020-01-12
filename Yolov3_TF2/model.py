@@ -24,7 +24,7 @@ class yolov3(object):
             boolean - whether to use the label smoothing algorithm
                 That is, smooth the labels towards 1/num_classes: 
                     new_label = label * (1 - label_smoothing) + label_smoothing / num_classes
-                This yeilds a lower loss when there is an incorrect prediction so incorrect learning/penalization occurs to a lesser degree
+                This yields a lower loss when there is an incorrect prediction so incorrect learning/penalization occurs to a lesser degree
         use_focal_loss
             boolean - whether to use the focal loss algorithm
                 Adds a factor (1-p)^y to the standard criterion; when y > 0, this reduces relative loss for well classified examples
@@ -55,6 +55,7 @@ class yolov3(object):
             'fused': None,  # Use fused batch norm if possible ?? SREE HELP
         }
 
+        #TODO: STARTING FROM THIS POINT FORWARD REWRITE WITHOUT SLIM
         with slim.arg_scope([slim.conv2d, slim.batch_norm], reuse=reuse):
             with slim.arg_scope([slim.conv2d],
                                 normalizer_fn=slim.batch_norm,
