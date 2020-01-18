@@ -56,8 +56,8 @@ class yolov3(object):
         }
 
         #TODO: STARTING FROM THIS POINT FORWARD REWRITE WITHOUT SLIM
-        with slim.arg_scope([slim.conv2d, slim.batch_norm], reuse=reuse):
-            with slim.arg_scope([slim.conv2d],
+        with tf.contrib.framework.arg_scope([conv2d, tf.nn.batch_normalization], reuse=reuse):
+            with arg_scope([conv2d],
                                 normalizer_fn=slim.batch_norm,
                                 normalizer_params=batch_norm_params,
                                 biases_initializer=None,
